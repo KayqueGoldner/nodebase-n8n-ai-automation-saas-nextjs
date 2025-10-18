@@ -1,18 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import prisma from "@/lib/db";
 
-export default function Home() {
-  const condition = true;
+export default async function Home() {
+  const users = await prisma.user.findMany();
 
   return (
-    <div
-      className={cn(
-        "text-lg text-red-500",
-        condition && "text-yellow-500"
-      )}
-    >
-      Hello World
-      <Button>Click me</Button>
+    <div>
+      {JSON.stringify(users, null, 2)}
     </div>
   );
 }
