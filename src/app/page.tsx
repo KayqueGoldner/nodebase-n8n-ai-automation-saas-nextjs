@@ -13,6 +13,14 @@ export default function Home() {
     trpc.getWorkflows.queryOptions()
   );
 
+  const testAi = useMutation(
+    trpc.testAi.mutationOptions({
+      onSuccess: () => {
+        toast.success("AI Job queued!");
+      }
+    }),
+  );
+
   const create = useMutation(
     trpc.createWorkflow.mutationOptions({
       onSuccess: () => {
@@ -27,6 +35,12 @@ export default function Home() {
       <div>
         {JSON.stringify(data, null, 2)}
       </div>
+      <Button
+        onClick={() => testAi.mutate()}
+        disabled={testAi.isPending}
+      >
+        Test AI
+      </Button>
       <Button
         onClick={() => create.mutate()}
         disabled={create.isPending}
