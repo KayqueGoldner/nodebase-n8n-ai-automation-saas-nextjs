@@ -1,3 +1,5 @@
+import { TRPCError } from "@trpc/server";
+
 import prisma from "@/lib/db";
 import { inngest } from "@/inngest/client";
 

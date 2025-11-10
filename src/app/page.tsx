@@ -17,7 +17,10 @@ export default function Home() {
     trpc.testAi.mutationOptions({
       onSuccess: () => {
         toast.success("AI Job queued!");
-      }
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
     }),
   );
 
