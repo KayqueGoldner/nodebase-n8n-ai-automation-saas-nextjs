@@ -1,8 +1,9 @@
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import React from "react";
+import { Input } from "@/components/ui/input";
 
 type EntityHeaderProps = {
   title: string;
@@ -11,19 +12,19 @@ type EntityHeaderProps = {
   disabled?: boolean;
   isCreating?: boolean;
 } & (
-    | {
+  | {
       onNew: () => void;
       newButtonHref?: never;
     }
-    | {
+  | {
       newButtonHref: string;
       onNew?: never;
     }
-    | {
+  | {
       onNew?: never;
       newButtonHref?: never;
     }
-  );
+);
 
 export const EntityHeader = ({
   title,
@@ -37,9 +38,7 @@ export const EntityHeader = ({
   return (
     <div className="flex flex-row items-center justify-between gap-x-4">
       <div className="flex flex-col">
-        <h1 className="text-lg md:text-xl font-semibold">
-          {title}
-        </h1>
+        <h1 className="text-lg md:text-xl font-semibold">{title}</h1>
         {description && (
           <p className="text-xs md:text-sm text-muted-foreground">
             {description}
@@ -47,20 +46,13 @@ export const EntityHeader = ({
         )}
       </div>
       {onNew && !newButtonHref && (
-        <Button
-          size="sm"
-          onClick={onNew}
-          disabled={isCreating || disabled}
-        >
+        <Button size="sm" onClick={onNew} disabled={isCreating || disabled}>
           <PlusIcon className="size-4" />
           {newButtonLabel}
         </Button>
       )}
       {newButtonHref && !onNew && (
-        <Button
-          size="sm"
-          asChild
-        >
+        <Button size="sm" asChild>
           <Link href={newButtonHref} prefetch>
             <PlusIcon className="size-4" />
             {newButtonLabel}
@@ -76,7 +68,7 @@ type EntityContainerProps = {
   header?: React.ReactNode;
   search?: React.ReactNode;
   pagination?: React.ReactNode;
-}
+};
 
 export const EntityContainer = ({
   children,
@@ -93,6 +85,70 @@ export const EntityContainer = ({
           {children}
         </div>
         {pagination}
+      </div>
+    </div>
+  );
+};
+
+interface EntitySearchProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}
+
+export const EntitySearch = ({
+  value,
+  onChange,
+  placeholder = "Search",
+}: EntitySearchProps) => {
+  return (
+    <div className="relative ml-auto">
+      <SearchIcon className="size-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+      <Input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="max-w-[200px] bg-background shadow-none border-border pl-8"
+      />
+    </div>
+  );
+};
+
+interface EntityPaginationProps {
+  page: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  disabled?: boolean;
+}
+
+export const EntityPagination = ({
+  page,
+  totalPages,
+  onPageChange,
+  disabled,
+}: EntityPaginationProps) => {
+  return (
+    <div className="flex items-center justify-between gap-x-2 w-full">
+      <div className="flex-1 text-sm text-muted-foreground">
+        Page {page} of {totalPages || 1}
+      </div>
+      <div className="flex items-center justify-end gap-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onPageChange(Math.max(1, page - 1))}
+          disabled={page === 1 || disabled}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onPageChange(Math.min(totalPages, page + 1))}
+          disabled={page === totalPages || totalPages === 0 || disabled}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );
