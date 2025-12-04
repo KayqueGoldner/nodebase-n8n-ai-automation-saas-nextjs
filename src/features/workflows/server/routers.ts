@@ -57,7 +57,7 @@ export const workflowsRouter = createTRPCRouter({
       }),
     )
     .query(({ ctx, input }) => {
-      return prisma.workflow.findUnique({
+      return prisma.workflow.findUniqueOrThrow({
         where: {
           id: input.id,
           userId: ctx.auth.user.id,
@@ -78,7 +78,7 @@ export const workflowsRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const { page, pageSize, search } = input;
-      const [items, totalCount] = await Promise.all([
+      const [ items, totalCount ] = await Promise.all([
         prisma.workflow.findMany({
           where: {
             userId: ctx.auth.user.id,
