@@ -34,6 +34,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
+  variableName: z
+    .string()
+    .min(1, "Variable name is required")
+    .regex(/^[a-zA-Z_$][a-zA-Z0-9_$]*$/, {
+      error: "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores"
+    }),
   endpoint: z.url({ message: "Please enter a valid URL" }),
   method: z.enum([ "GET", "POST", "PUT", "DELETE", "PATCH" ]),
   body: z
@@ -75,6 +81,7 @@ export const HttpRequestDialog = ({
     }
   }, [ defaultValues, open, form ]);
 
+  const watchVariableName = form.watch("variableName");
   const watchMethod = form.watch("method");
   const showBodyField = [ "POST", "PUT", "PATCH" ].includes(watchMethod);
 
@@ -97,6 +104,26 @@ export const HttpRequestDialog = ({
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-8 mt-4"
           >
+            <FormField
+              control={form.control}
+              name="variableName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Variable Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="variableName"
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Use this name to reference the result in other nodes:{" "}
+                    {watchVariableName && "{{" + watchVariableName + "}}"}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="method"
