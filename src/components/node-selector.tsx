@@ -40,6 +40,12 @@ const triggerNodes: NodeTypeOption[] = [
     icon: "/logos/googleform.svg",
     description: "Runs the flow when a Google Form is submitted.",
   },
+  {
+    type: NodeType.STRIPE_TRIGGER,
+    label: "Stripe",
+    icon: "/logos/stripe.svg",
+    description: "Runs the flow when a Stripe event is captured.",
+  },
 ];
 
 const executionNodes: NodeTypeOption[] = [
