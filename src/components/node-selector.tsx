@@ -46,6 +46,24 @@ const triggerNodes: NodeTypeOption[] = [
     icon: "/logos/stripe.svg",
     description: "Runs the flow when a Stripe event is captured.",
   },
+  {
+    type: NodeType.GEMINI,
+    label: "Gemini",
+    icon: "/logos/gemini.svg",
+    description: "Uses Google Gemini to generate text.",
+  },
+  {
+    type: NodeType.OPENAI,
+    label: "OpenAI",
+    icon: "/logos/openai.svg",
+    description: "Uses OpenAI to generate text.",
+  },
+  {
+    type: NodeType.ANTHROPIC,
+    label: "Anthropic",
+    icon: "/logos/anthropic.svg",
+    description: "Uses Anthropic to generate text.",
+  },
 ];
 
 const executionNodes: NodeTypeOption[] = [
