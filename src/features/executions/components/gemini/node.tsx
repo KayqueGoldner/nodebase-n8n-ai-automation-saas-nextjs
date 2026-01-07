@@ -16,6 +16,7 @@ import { fetchGeminiRealtimeToken } from "./actions";
 import { ModelIdType } from "./executor";
 
 type GeminiNodeData = {
+  credentialId?: string;
   variableName?: string;
   model?: ModelIdType;
   systemPrompt?: string;
