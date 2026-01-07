@@ -16,6 +16,7 @@ import { fetchAnthropicRealtimeToken } from "./actions";
 import { ModelIdType } from "./executor";
 
 type AnthropicNodeData = {
+  credentialId?: string;
   variableName?: string;
   model?: ModelIdType;
   systemPrompt?: string;
