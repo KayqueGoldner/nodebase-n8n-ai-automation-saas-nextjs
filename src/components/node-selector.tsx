@@ -64,6 +64,18 @@ const triggerNodes: NodeTypeOption[] = [
     icon: "/logos/anthropic.svg",
     description: "Uses Anthropic to generate text.",
   },
+  {
+    type: NodeType.DISCORD,
+    label: "Discord",
+    icon: "/logos/discord.svg",
+    description: "Send a message to Discord.",
+  },
+  {
+    type: NodeType.SLACK,
+    label: "Slack",
+    icon: "/logos/slack.svg",
+    description: "Send a message to Slack.",
+  },
 ];
 
 const executionNodes: NodeTypeOption[] = [
